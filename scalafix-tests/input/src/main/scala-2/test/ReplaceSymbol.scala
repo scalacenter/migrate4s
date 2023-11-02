@@ -12,6 +12,8 @@ patches.replaceSymbols = [
     to = "com.geirsson.mutable.CoolBuffer" }
   { from = "scala.collection.mutable.HashMap"
     to = "com.geirsson.mutable.unsafe.CoolMap" }
+  { from = "scala.collection.immutable.TreeMap"
+    to = "com.geirsson.immutable.SortedMap" }
   { from = "scala.math.sqrt"
     to = "com.geirsson.fastmath.sqrt" }
   // normalized symbol renames all overloaded methods
@@ -29,6 +31,8 @@ patches.replaceSymbols = [
  */
 package fix
 
+import scala.collection.immutable.SortedMap
+import scala.collection.immutable.TreeMap
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable
@@ -42,6 +46,7 @@ object ReplaceSymbol {
   "blah".substring(1)
   "blah".substring(1, 2)
   val u: mutable.HashMap[Int, Int] = HashMap.empty[Int, Int]
+  val v: SortedMap[Int, Int] = TreeMap.empty[Int, Int]
   val x: ListBuffer[Int] = ListBuffer.empty[Int]
   val y: mutable.ListBuffer[Int] = mutable.ListBuffer.empty[Int]
   val z: scala.collection.mutable.ListBuffer[Int] =

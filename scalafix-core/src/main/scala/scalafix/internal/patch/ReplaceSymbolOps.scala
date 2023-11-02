@@ -10,6 +10,8 @@ import scalafix.patch.Patch
 import scalafix.patch.Patch.internal.ReplaceSymbol
 import scalafix.syntax._
 import scalafix.v0._
+import scala.annotation.tailrec
+
 
 object ReplaceSymbolOps {
   private object Select {
@@ -19,6 +21,20 @@ object ReplaceSymbolOps {
       case _ => None
     }
   }
+  private def extractImports(stats: Seq[Stat]): Seq[Import] = {
+    stats
+      .takeWhile(_.is[Import])
+      .collect { case i: Import => i }
+  }
+
+  @tailrec private final def getGlobalImports(ast: Tree): Seq[Import] =
+    ast match {
+      case Pkg(_, Seq(pkg: Pkg)) => getGlobalImports(pkg)
+      case Source(Seq(pkg: Pkg)) => getGlobalImports(pkg)
+      case Pkg(_, stats) => extractImports(stats)
+      case Source(stats) => extractImports(stats)
+      case _ => Nil
+    }
 
   def naiveMoveSymbolPatch(
       moveSymbols: Seq[ReplaceSymbol]
@@ -92,6 +108,7 @@ object ReplaceSymbolOps {
         case _ => None
       }
     }
+    
     val patches = ctx.tree.collect { case n @ Move(to) =>
       // was this written as `to = "blah"` instead of `to = _root_.blah`
       val isSelected = to match {
@@ -126,10 +143,20 @@ object ReplaceSymbolOps {
             if sig.name != parent.value =>
           Patch.empty // do nothing because it was a renamed symbol
         case Some(parent) =>
+          val causesCollision = getGlobalImports(ctx.tree).exists { importStmt =>
+            importStmt.importers.flatMap(_.importees).exists {
+              case Importee.Name(name) => name.value == to.signature.name
+              case Importee.Rename(_, rename) => rename.value == to.signature.name
+              case _ => false
+            }
+          }
           val addImport =
-            if (n.isDefinition) Patch.empty
+            if (n.isDefinition || causesCollision) Patch.empty
             else ctx.addGlobalImport(to)
-          addImport + ctx.replaceTree(n, to.signature.name)
+          if(causesCollision)
+            addImport + ctx.replaceTree(n, to.owner.syntax + to.signature.name)
+          else
+            addImport + ctx.replaceTree(n, to.signature.name)
         case _ =>
           Patch.empty
       }
