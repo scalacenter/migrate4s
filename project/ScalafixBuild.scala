@@ -37,7 +37,6 @@ object ScalafixBuild extends AutoPlugin with GhpagesKeys {
       scala212,
       scala213,
       scala33,
-      scala35,
       scala36,
       scala3Next
     ).distinct
@@ -146,7 +145,6 @@ object ScalafixBuild extends AutoPlugin with GhpagesKeys {
         "scala212" -> scala212,
         "scala213" -> scala213,
         "scala33" -> scala33,
-        "scala35" -> scala35,
         "scala36" -> scala36,
         "scala3LTS" -> scala3LTS,
         "scala3Next" -> scala3Next,

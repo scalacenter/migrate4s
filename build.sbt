@@ -33,7 +33,6 @@ lazy val interfaces = project
       props.put("scala212", scala212)
       props.put("scala213", scala213)
       props.put("scala33", scala33)
-      props.put("scala35", scala35)
       props.put("scala36", scala36)
       props.put("scala3LTS", scala3LTS)
       props.put("scala3Next", scala3Next)
