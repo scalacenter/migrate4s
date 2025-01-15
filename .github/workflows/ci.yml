@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu"]
-        jvm: ["8", "11", "17", "21", "22"]
+        jvm: ["8", "11", "17", "21", "23"]
         include:
           - os: windows
             jvm: 21
