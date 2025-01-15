@@ -654,7 +654,7 @@ class OrganizeImports(
 
   /**
    * Returns the index of the group to which the given importer belongs. Each
-   * group is represented by an `ImportMatcher`. If multiple `ImporterMatcher`s
+   * group is represented by an `ImportMatcher`. If multiple `ImporterMatcher` s
    * match the given import, the one matches the longest prefix wins.
    */
   private def matchImportGroup(importer: Importer): Int = {
@@ -816,10 +816,10 @@ class OrganizeImports(
     }
 
     /**
-     * Returns an `Importer` with all the `Importee`s that are selected from the
-     * input `Importer` and satisfy a predicate. If all the `Importee`s are
+     * Returns an `Importer` with all the `Importee` s that are selected from
+     * the input `Importer` and satisfy a predicate. If all the `Importee` s are
      * selected, the input `Importer` instance is returned to preserve the
-     * original source level formatting. If none of the `Importee`s are
+     * original source level formatting. If none of the `Importee` s are
      * selected, returns a `None`.
      */
     def filterImportees(f: Importee => Boolean): Option[Importer] = {
@@ -1057,7 +1057,7 @@ object OrganizeImports {
   }
 
   /**
-   * Categorizes a list of `Importee`s into the following four groups:
+   * Categorizes a list of `Importee` s into the following four groups:
    *
    *   - Names, e.g., `Seq`, `Option`, etc.
    *   - Renames, e.g., `{Long => JLong}`, `Duration as D`, etc.

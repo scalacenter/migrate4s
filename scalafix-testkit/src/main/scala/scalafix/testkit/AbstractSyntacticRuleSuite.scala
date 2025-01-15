@@ -16,7 +16,7 @@ import scalafix.v1._
  * testing style of your choice if you add your own tests.
  *
  * @param rule
- *   the default rule to use from `check`/`checkDiff`.
+ *   the default rule to use from `check` /`checkDiff`.
  */
 abstract class AbstractSyntacticRuleSuite()
     extends Suite

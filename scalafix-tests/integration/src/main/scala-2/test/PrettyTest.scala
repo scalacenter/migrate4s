@@ -23,10 +23,9 @@ class PrettyTest {
   val b = new a.Inner
 
   Option(null.asInstanceOf[{
-      def bar(a: Int): Int
-      def foo(a: Int): Int
-    }
-  ])
+    def bar(a: Int): Int
+    def foo(a: Int): Int
+  }])
   Option(b)
   Option(null.asInstanceOf[Int with String])
   Option(null.asInstanceOf[this.type])
