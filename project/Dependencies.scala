@@ -9,7 +9,7 @@ object Dependencies {
   val scala213 = sys.props.getOrElse("scala213.nightly", "2.13.16")
   val scala33 = "3.3.5"
   val scala35 = "3.5.2"
-  val scala36 = "3.6.3"
+  val scala36 = "3.6.4-RC2"
   val scala3LTS = scala33
   val scala3Next = sys.props.getOrElse("scala3.nightly", scala36)
 
